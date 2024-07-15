@@ -1,0 +1,36 @@
+package com.atmecsgram.user.service;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.atmecsgram.user.dto.UserDto;
+import com.atmecsgram.user.model.User;
+import com.atmecsgram.user.repository.UserRepository;
+
+@Service
+public class UserService {
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	public User createUser (UserDto userDto) {
+		User user = new User();
+		
+		user.setFirst_name(userDto.getFirstName());
+        user.setLast_name(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+        user.setUsername(userDto.getUsername());
+        user.setPassword(userDto.getPassword());
+        user.setDate_of_birth(userDto.getDateOfBirth());
+        user.setProfile_pic(userDto.getProfilePic());
+        user.setBio(userDto.getBio());
+        user.setGender(userDto.getGender());
+        user.setCreated_at(new Date());
+        user.setUpdated_at(new Date());
+        return userRepository.save(user);
+		
+	}
+	
+}

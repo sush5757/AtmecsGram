@@ -1,0 +1,29 @@
+package com.actmecsgram.services;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.actmecsgram.dto.PostDto;
+import com.actmecsgram.models.Post;
+import com.actmecsgram.models.User;
+import com.actmecsgram.repositories.PostRepository;
+import com.actmecsgram.repositories.UserRepository;
+
+@Service
+public class PostService {
+	
+	@Autowired
+	private PostRepository postRepository;
+	@Autowired
+	private UserRepository userRepository;
+	
+	public Post createPost(PostDto postDto) {
+		Optional<User>user = userRepository.findById(postDto.getUserId());
+		
+	}
+	
+	
+	
+}

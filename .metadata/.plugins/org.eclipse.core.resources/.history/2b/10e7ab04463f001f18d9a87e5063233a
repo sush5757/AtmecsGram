@@ -1,0 +1,9 @@
+package com.actmecsgram.actmecsgram.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.actmecsgram.actmecsgram.models.LikeClass;
+
+public interface LikesRepository extends JpaRepository<LikeClass, Long> {
+
+}

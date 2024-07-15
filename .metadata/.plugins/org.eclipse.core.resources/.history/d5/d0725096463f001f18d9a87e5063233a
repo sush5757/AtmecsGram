@@ -1,0 +1,5 @@
+package com.actmecsgram.actmecsgram.services;
+
+public class UserService {
+
+}

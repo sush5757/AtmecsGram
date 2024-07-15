@@ -1,0 +1,11 @@
+package com.actmecsgram.actmecsgram.models;
+
+public class User {
+	
+	Long id ;
+	
+	
+	
+	
+
+}

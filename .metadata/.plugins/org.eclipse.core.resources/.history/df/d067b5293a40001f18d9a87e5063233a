@@ -1,0 +1,5 @@
+package com.atmecsgram.user.model;
+
+public class User {
+
+}

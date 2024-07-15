@@ -1,0 +1,28 @@
+package com.actmecsgram.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.actmecsgram.models.Post;
+import com.actmecsgram.services.PostService;
+
+@RestController
+@RequestMapping("/home/user/post")
+public class PostController {
+	
+	@Autowired
+	PostService postService;
+	
+	 @PostMapping
+	    public ResponseEntity<Post> createPost(@RequestBody PostDto postDto) {
+	        Post post = postService.createPost(postDto);
+	        return ResponseEntity.ok(post);
+	    }
+	
+	
+	
+	
+
+}

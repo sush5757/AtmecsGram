@@ -1,0 +1,5 @@
+package com.actmecsgram.actmecsgram.repositories;
+
+public class LikesRepository {
+
+}

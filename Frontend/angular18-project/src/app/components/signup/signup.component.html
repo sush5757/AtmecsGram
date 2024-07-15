@@ -1,0 +1,172 @@
+<div class="flex items-center justify-center min-h-screen bg-rose-50">
+  <div
+    class="relative flex flex-col m-6 space-y-10 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0 md:m-0"
+  >
+    <form
+      (ngSubmit)="signupUser()"
+      #loginForm="ngForm"
+      class="p-6 space-y-4 md:w-1/2"
+    >
+      <h2 class="font-mono mb-5 text-4xl font-bold">Sign Up</h2>
+      <p class="max-w-sm mb-12 shrink-none font-sans font-light text-gray-600">
+        Join us today and start sharing your world through pictures. Sign up now
+        to capture and connect!
+      </p>
+      <div class="relative">
+        <label for="signup-first-name" class="sr-only">First Name</label>
+        <input
+          id="signup-first-name"
+          type="text"
+          [(ngModel)]="signupData.first_name"
+          name="first_name"
+          required
+          #firstName="ngModel"
+          class="w-full p-6 border border-gray-300 rounded-md placeholder-sans placeholder-light"
+          placeholder="First Name"
+        />
+        <div
+          *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+          class="text-red-500 text-sm mt-1"
+        >
+          <div>First name is required.</div>
+        </div>
+      </div>
+      <div class="relative">
+        <label for="signup-last-name" class="sr-only">Last Name</label>
+        <input
+          id="signup-last-name"
+          type="text"
+          [(ngModel)]="signupData.last_name"
+          name="last_name"
+          required
+          #lastName="ngModel"
+          class="w-full p-6 border border-gray-300 rounded-md placeholder-sans placeholder-light"
+          placeholder="Last Name"
+        />
+        <div
+          *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+          class="text-red-500 text-sm mt-1"
+        >
+          <div>Last name is required.</div>
+        </div>
+      </div>
+      <!-- Email Input -->
+      <div class="relative">
+        <label for="email" class="sr-only">Email Address</label>
+        <input
+          id="email"
+          type="email"
+          [(ngModel)]="signupData.email"
+          name="email"
+          required
+          class="w-full p-6 border border-gray-300 rounded-md placeholder-sans placeholder-light"
+          placeholder="Enter your email address"
+        />
+      </div>
+
+      <!-- Password Input -->
+      <div class="relative">
+        <label for="password" class="sr-only">Password</label>
+        <input
+          id="password"
+          type="password"
+          [(ngModel)]="signupData.password"
+          name="password"
+          required
+          class="w-full p-6 border border-gray-300 rounded-md placeholder-sans placeholder-light"
+          placeholder="Enter your password"
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full h-12 flex justify-center items-center space-x-2 font-sans font-bold text-white rounded-md shadow-lg bg-cyan-700 hover:bg-opacity-90 transition duration-150"
+        [disabled]="loginForm.invalid"
+      >
+        <span>Next</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-7"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="#ffffff"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <line x1="13" y1="18" x2="19" y2="12" />
+          <line x1="13" y1="6" x2="19" y2="12" />
+        </svg>
+      </button>
+
+      <!-- Separator -->
+      <div class="border-b border-gray-300"></div>
+
+      <div class="py-2 text-sm text-center text-gray-400">
+        or Sign-Up in with
+      </div>
+
+      <div class="flex space-x-4">
+        <button
+          class="flex items-center justify-center w-full h-12 space-x-2 border border-gray-300 rounded shadow-sm hover:bg-opacity-30 hover:shadow-lg transition duration-150"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 509 509"
+            class="w-8 fill-current text-blue-500"
+          >
+            <path
+              fill="#0866FF"
+              d="M509 254.5C509 113.94 395.06 0 254.5 0S0 113.94 0 254.5C0 373.86 82.17 474 193.02 501.51V332.27h-52.48V254.5h52.48v-33.51c0-86.63 39.2-126.78 124.24-126.78 16.13 0 43.95 3.17 55.33 6.33v70.5c-6.01-.63-16.44-.95-29.4-.95-41.73 0-57.86 15.81-57.86 56.91v27.5h83.13l-14.28 77.77h-68.85v174.87C411.35 491.92 509 384.62 509 254.5z"
+            />
+            <path
+              fill="#fff"
+              d="M354.18 332.27l14.28-77.77h-83.13V227c0-41.1 16.13-56.91 57.86-56.91 12.96 0 23.39.32 29.4.95v-70.5c-11.38-3.16-39.2-6.33-55.33-6.33-85.04 0-124.24 40.16-124.24 126.78v33.51h-52.48v77.77h52.48v169.24c19.69 4.88 40.28 7.49 61.48 7.49 10.44 0 20.72-.64 30.83-1.86V332.27h68.85z"
+            />
+          </svg>
+          <span class="font-thin">Facebook</span>
+        </button>
+
+        <button
+          class="flex items-center justify-center w-full h-12 space-x-2 border border-gray-300 rounded shadow-sm hover:bg-opacity-30 hover:shadow-lg transition duration-150"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 326667 333333"
+            class="w-8 fill-current text-red-500"
+          >
+            <path
+              d="M326667 170370c0-13704-1112-23704-3518-34074H166667v61851h91851c-1851 15371-11851 38519-34074 54074l-311 2071 49476 38329 3428 342c31481-29074 49630-71852 49630-122593m0 0z"
+              fill="#4285f4"
+            />
+            <path
+              d="M166667 333333c44999 0 82776-14815 110370-40370l-52593-40742c-14074 9815-32963 16667-57777 16667-44074 0-81481-29073-94816-69258l-1954 166-51447 39815-673 1870c27407 54444 83704 91852 148890 91852z"
+              fill="#34a853"
+            />
+            <path
+              d="M71851 199630c-3518-10370-5555-21482-5555-32963 0-11482 2036-22593 5370-32963l-93-2209-52091-40455-1704 811C6482 114444 1 139814 1 166666s6482 52221 17777 74814l54074-41851m0 0z"
+              fill="#fbbc04"
+            />
+            <path
+              d="M166667 64444c31296 0 52406 13519 64444 24816l47037-45926C249260 16482 211666 1 166667 1 101481 1 45185 37408 17777 91852l53889 41853c13520-40185 50927-69260 95001-69260m0 0z"
+              fill="#ea4335"
+            />
+          </svg>
+          <span class="font-thin">Google</span>
+        </button>
+      </div>
+
+      <div class="py-6 text-sm text-center text-gray-400">
+        Already have an account?
+        <a (click)="navigateToLogin()" class="text-cyan-700 cursor-pointer"
+          >Log in</a
+        >
+      </div>
+    </form>
+
+    <img src="/images/image.jpg" alt="" class="w-[430px] hidden md:block" />
+  </div>
+</div>

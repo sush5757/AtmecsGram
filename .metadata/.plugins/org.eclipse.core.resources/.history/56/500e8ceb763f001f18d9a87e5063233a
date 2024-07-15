@@ -1,0 +1,5 @@
+package com.actmecsgram.dto;
+
+public class PostDto {
+
+}

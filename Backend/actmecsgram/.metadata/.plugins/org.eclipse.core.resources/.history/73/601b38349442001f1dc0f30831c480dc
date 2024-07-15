@@ -1,0 +1,5 @@
+package com.atmecsgram.user.dto;
+
+public class LoginDto {
+
+}

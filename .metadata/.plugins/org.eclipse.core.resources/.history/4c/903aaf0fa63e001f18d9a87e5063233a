@@ -1,0 +1,13 @@
+package com.actmecsgram.actmecsgram.models;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class Post {
+	private Integer postId;
+	
+	private User user_id;
+	
+	
+
+}

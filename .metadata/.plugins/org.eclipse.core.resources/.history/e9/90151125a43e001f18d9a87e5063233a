@@ -1,0 +1,42 @@
+package com.actmecsgram.actmecsgram.models;
+
+import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id ;
+	
+	
+	private String first_name;
+	
+	private String Last_name;
+	
+	@Column(unique = true)
+	private String email;
+	
+	private String password;
+	
+	private Date date_of_birth;
+	
+	private String profile_pic;
+	
+	private String bio;
+	
+	private String gender;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

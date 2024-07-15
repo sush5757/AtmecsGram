@@ -1,0 +1,23 @@
+package com.atmecsgram.user.dto;
+
+import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
+
+public class UserDto {
+	private Long userId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String username;
+    private String password;
+    private Date dateOfBirth;
+    private String profilePic;
+    private String bio;
+    private String gender;
+    private Date createdAt;
+    private Date updatedAt;
+}

@@ -1,0 +1,49 @@
+package com.actmecsgram.controllers;
+
+import java.util.List;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.actmecsgram.dto.UserDto;
+import com.actmecsgram.models.User;
+import com.actmecsgram.services.UserService;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+
+
+@RestController
+@RequestMapping("/home/user")
+public class UserController {
+
+	@Autowired
+	UserService userService;
+
+	@PostMapping
+	public ResponseEntity<User> createUser(@RequestBody UserDto userdto) {
+		User createdUser = userService.createUser(userdto);
+		return ResponseEntity.ok(createdUser);
+
+	}
+
+	@GetMapping
+	public ResponseEntity<List<User>> getAllUser() {
+		List<User> allusers = userService.getAllUsers();
+		return ResponseEntity.ok(allusers);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<User> getUserById(@PathVariable Long id) {
+		return userService.getUserById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+
+	}
+	@PutMapping("/{id}")
+	public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+		User updateUser = userService.updateUser(id, userDto);
+		return ResponseEntity.ok(updateUser);
+	}
+
+}

@@ -1,0 +1,5 @@
+spring.application.name=actmecsgram
+
+spring.datasource.url=jdbc:mysql://localhost:3306/atmecsgram
+spring.datasource.username=root
+spring.datasource.password=root

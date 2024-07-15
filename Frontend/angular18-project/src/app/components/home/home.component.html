@@ -1,0 +1,70 @@
+<div class="h-screen w-screen overflow-hidden bg-neutral-100 flex flex-col">
+  <div
+    class="h-14 shrink-0 border-b border-neutral-200 shadow-sm flex justify-center bg-white"
+  ></div>
+  <div class="flex grow py-2 justify-center overflow-hidden">
+    <div
+      class="p-4 shrink-0 overflow-y-scroll flex flex-col w-[17%] gap-4"
+    ></div>
+    <div
+      class="flex flex-col gap-2 p-4 grow overflow-y-scroll rounded-lg bg-white"
+    >
+      <div class="flex flex-row justify-between items-center">
+        <h1 class="text-md font-semibold">Trending Now</h1>
+        <app-custom-button
+          (onButtonTap)="toggleCreatePost()"
+          btnText="Create Post"
+          radius="rounded-lg"
+          textSize="text-xs"
+        ></app-custom-button>
+      </div>
+      <div *ngIf="showCreatePost">
+        <app-create-post></app-create-post>
+      </div>
+      <div class="flex flex-col gap-4 w-full">
+        <app-post
+          *ngFor="let post of postService.getPosts()"
+          [post]="post"
+        ></app-post>
+      </div>
+    </div>
+
+    <div class="p-4 shrink-0 overflow-y-scroll flex flex-col w-[25%] gap-4">
+      <div
+        class="flex flex-col items-center gap-2 py-2 px-4 bg-white rounded-lg border border-neutral-200 shadow-sm"
+      >
+        <h1 class="font-semibold text-md">Profile</h1>
+        <img
+          [src]="user.avatar"
+          class="w-20 h-20 rounded-full object-cover bg-neutral-300"
+        />
+
+        <div class="flex flex-col items-center gap-1">
+          <h1 class="text-md font-medium">
+            {{ user.first_name }} {{ user.last_name }}
+          </h1>
+          <p class="text-xs text-neutral-400">{{ user.bio }}</p>
+        </div>
+        <div
+          class="flex flex-row divide-x p-2 items-center w-full justify-between"
+        >
+          <div class="flex flex-col flex-1 justify-center items-center">
+            <h1 class="text-sm font-semibold">{{ user.posts }}</h1>
+            <p class="text-xs text-neutral-400">Posts</p>
+          </div>
+          <div class="flex flex-col flex-1 justify-center items-center">
+            <h1 class="text-sm font-semibold">{{ user.followers }}</h1>
+            <p class="text-xs text-neutral-400">Followers</p>
+          </div>
+          <div class="flex flex-col flex-1 justify-center items-center">
+            <h1 class="text-sm font-semibold">{{ user.following }}</h1>
+            <p class="text-xs text-neutral-400">Following</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow-sm border border-neutral-200">
+        <app-suggestions></app-suggestions>
+      </div>
+    </div>
+  </div>
+</div>

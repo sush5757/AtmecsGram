@@ -1,0 +1,14 @@
+package com.actmecsgram.actmecsgram.repositories;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.actmecsgram.actmecsgram.models.LikeClass;
+
+@Repository
+public interface LikesRepository extends JpaRepository<LikeClass, Long> {
+	List<LikeClass> findByPostId(Long postId);
+    List<LikeClass> findByUserId(Long userId);
+}

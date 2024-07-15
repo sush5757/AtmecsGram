@@ -1,0 +1,20 @@
+package com.actmecsgram.actmecsgram.models;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class Post {
+	private Integer postId;
+	
+	private User user;
+	
+	private String caption;
+	private String image_url;
+	private String video_url;
+	
+	private Date created_at;
+    private Date updated_at;
+	
+	
+
+}

@@ -1,0 +1,10 @@
+package com.actmecsgram.actmecsgram.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.actmecsgram.actmecsgram.models.Post;
+
+public interface PostRepository extends JpaRepository<Post, Long> {
+	  List<Post> findByUserId(Long userId);
+	    List<Post> findAllByOrderByLikesDesc();
+}

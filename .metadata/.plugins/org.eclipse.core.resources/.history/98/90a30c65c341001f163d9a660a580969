@@ -1,0 +1,99 @@
+package com.actmecsgram.services;
+
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.actmecsgram.dto.PostDto;
+import com.actmecsgram.models.Post;
+import com.actmecsgram.models.User;
+import com.actmecsgram.repositories.PostRepository;
+import com.actmecsgram.repositories.UserRepository;
+
+@Service
+public class PostService {
+	
+	@Autowired
+	private PostRepository postRepository;
+
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	public Post createPost(PostDto postDto) {
+        User optionalUser = getUserById(postDto.getUserId()) ;
+        if (optionalUser != null) {
+            Post post = new Post();
+            post.setCaption(postDto.getCaption());
+            post.setImage_url(postDto.getImageUrl());
+            post.setVideo_url(postDto.getVideoUrl());
+            post.setCreated_at(new Date());
+            post.setUpdated_at(new Date());
+            post.setUser(optionalUser);
+            System.out.println(post);
+            return postRepository.save(post);
+        } else {
+            throw new RuntimeException("User not found with id: " + postDto.getUserId());
+        }
+    }
+	public User getUserById(Long userId) {
+		  String url = "http://localhost:8081/user/" + userId;
+	        return restTemplate.getForObject(url, User.class);
+	}
+	
+	public List<Post> getAllPosts(){
+		return postRepository.findAll();
+		
+	}
+	 public void deletePost(Integer id) {
+	        postRepository.deleteById(id);
+	    }
+	
+	public List<Post> getPostByUserId(Long userId){
+		return postRepository.findByUserId(userId);
+	}
+	
+	
+	 public List<Post> getPostsSortedByLikes() {
+	        List<Post> allPosts = getAllPosts();
+	        return allPosts.stream()
+	                       .sorted(Comparator.comparingInt(Post::getLikesCount).reversed())
+	                       .toList();
+	    }
+	
+	public Optional<Post> getPostById(Integer id) {
+        return postRepository.findById(id);
+    }
+	public Post updatePost(Integer id, PostDto postDto) {
+        Optional<Post> optionalPost = postRepository.findById(id);
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            post.setCaption(postDto.getCaption());
+            post.setImage_url(postDto.getImageUrl());
+            post.setVideo_url(postDto.getVideoUrl());
+            post.setUpdated_at(new Date());
+            return postRepository.save(post);
+        } else {
+            throw new RuntimeException("Post not found with id: " + id);
+        }
+    }
+	 public void likePost(Integer id) {
+	        Optional<Post> optionalPost = postRepository.findById(id);
+	        if (optionalPost.isPresent()) {
+	            Post post = optionalPost.get();
+	            post.getLikes().size(); // Assuming LikeClass is correctly mapped to handle like functionality
+	            postRepository.save(post);
+	        } else {
+	            throw new RuntimeException("Post not found with id: " + id);
+	        }
+	
+	 }
+	
+	 
+}

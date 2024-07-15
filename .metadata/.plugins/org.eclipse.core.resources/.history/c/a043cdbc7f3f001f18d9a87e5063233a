@@ -1,0 +1,65 @@
+package com.actmecsgram.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.actmecsgram.dto.PostDto;
+import com.actmecsgram.models.Post;
+import com.actmecsgram.services.PostService;
+
+@RestController
+@RequestMapping("/home/user/post")
+public class PostController {
+
+	@Autowired
+	PostService postService;
+
+	@PostMapping
+	public ResponseEntity<Post> createPost(@RequestBody PostDto postDto) {
+		Post post = postService.createPost(postDto);
+		return ResponseEntity.ok(post);
+	}
+	
+	 @GetMapping
+	    public ResponseEntity<List<Post>> getAllPosts() {
+	        List<Post> posts = postService.getAllPosts();
+	        return ResponseEntity.ok(posts);
+	    }
+	 
+	 @GetMapping("/sorted/likes")
+	    public ResponseEntity<List<Post>> getPostsSortedByLikes() {
+	        List<Post> posts = postService.getPostsSortedByLikes();
+	        return ResponseEntity.ok(posts);
+	    }
+
+	 
+	 @PutMapping("/{id}")
+	    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody PostDto postDto) {
+	        Post updatedPost = postService.updatePost(id, postDto);
+	        return ResponseEntity.ok(updatedPost);
+	    }
+
+	    @DeleteMapping("/{id}")
+	    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+	        postService.deletePost(id);
+	        return ResponseEntity.noContent().build();
+	    }
+
+	    @PostMapping("/{id}/like")
+	    public ResponseEntity<Void> likePost(@PathVariable Long id) {
+	        postService.likePost(id);
+	        return ResponseEntity.noContent().build();
+	    }
+	 
+
+}

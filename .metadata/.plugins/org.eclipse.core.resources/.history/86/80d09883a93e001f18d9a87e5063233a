@@ -1,0 +1,6 @@
+package com.actmecsgram.actmecsgram.repositories;
+
+public class UserRepository exends Jpa {
+	
+
+}
