@@ -10,4 +10,5 @@ import com.actmecsgram.models.Post;
 public interface PostRepository extends JpaRepository<Post, Integer> {
 	  List<Post> findByUserId(Long userId);
 	    List<Post> findAllByOrderByLikesDesc();
+	    List<Post> findByUserIdIn(List<Long> userIds);
 }

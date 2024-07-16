@@ -1,4 +1,5 @@
-package com.actmecsgram.models;
+package com.amecsgram.follow.model;
+
 
 import java.util.Date;
 
@@ -9,21 +10,24 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"followerId", "followingId"}))
 public class Follow {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "follower_id", nullable = false)
+    @JoinColumn(name = "followerId", nullable = false)
     private Long followerId; 
 
-    @JoinColumn(name = "followee_id", nullable = false)
-    private Long followeeId; 
+    @JoinColumn(name = "followingId", nullable = false)
+    private Long followingId; 
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at;
@@ -32,10 +36,10 @@ public class Follow {
     public Follow() {
     }
 
-    public Follow(Long id, Long followerId, Long followeeId, Date created_at) {
+    public Follow(Long id, Long followerId, Long followingId, Date created_at) {
         this.id = id;
         this.followerId = followerId;
-        this.followeeId = followeeId;
+        this.followingId = followingId;
         this.created_at = created_at;
     }
 
@@ -56,14 +60,7 @@ public class Follow {
         this.followerId = followerId;
     }
 
-    public Long getFolloweeId() {
-        return followeeId;
-    }
-
-    public void setFolloweeId(Long followeeId) {
-        this.followeeId = followeeId;
-    }
-
+  
     public Date getCreated_at() {
         return created_at;
     }
@@ -74,10 +71,18 @@ public class Follow {
 
     @Override
     public String toString() {
-        return "Follow [id=" + id + ", followerId=" + followerId + ", followeeId=" + followeeId + ", created_at=" + created_at + "]";
+        return "Follow [id=" + id + ", followerId=" + followerId + ", followingId=" + followingId + ", created_at=" + created_at + "]";
     }
 
-    @PrePersist
+    public Long getFollowingId() {
+		return followingId;
+	}
+
+	public void setFollowingId(Long followingId) {
+		this.followingId = followingId;
+	}
+
+	@PrePersist
     protected void onCreate() {
         this.created_at = new Date();
     }

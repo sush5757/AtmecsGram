@@ -18,7 +18,7 @@ import com.actmecsgram.models.Post;
 import com.actmecsgram.services.PostService;
 
 @RestController
-@RequestMapping("/home/user/post")
+@RequestMapping("/home/post")
 public class PostController {
 
 	@Autowired
@@ -30,22 +30,24 @@ public class PostController {
 		Post post = postService.createPost(postDto);
 		return ResponseEntity.ok(post);
 	}
+	 @GetMapping
+	    public ResponseEntity<List<Post>> getAllPosts() {
+	        List<Post> posts = postService.getAllPosts();
+	        return ResponseEntity.ok(posts);
+	    }
+	 
 	@GetMapping("/{userId}")
     public ResponseEntity<List<Post>> getPostByUserId(@PathVariable Long userId) {
         List<Post> posts = postService.getPostByUserId(userId);
         return ResponseEntity.ok(posts);
     }
 	
-//	@GetMapping("/user/posts")
-//	public ResponseEntity<List<Post>> getPostByUserFollowing(@PathVariable Long userId){
-//		
-//		
-//	}
-	 @GetMapping
-	    public ResponseEntity<List<Post>> getAllPosts() {
-	        List<Post> posts = postService.getAllPosts();
-	        return ResponseEntity.ok(posts);
-	    }
+	@GetMapping("/{userId}/following")
+	public ResponseEntity<List<Post>> getPostByUserFollowing(@PathVariable Long userId) {
+		
+	    List<Post> posts = postService.getPostsForFollowing(userId);
+	    return ResponseEntity.ok(posts);
+	}
 	 
 	 @GetMapping("/sorted/likes")
 	    public ResponseEntity<List<Post>> getPostsSortedByLikes() {
