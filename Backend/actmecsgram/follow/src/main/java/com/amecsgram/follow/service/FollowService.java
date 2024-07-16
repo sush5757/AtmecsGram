@@ -37,5 +37,8 @@ public class FollowService {
 	public List<Follow> getFollowing(Long userId) {
 		return followRepository.findByFollowingId(userId);
 	}
-
+	public void unfollowUser(Long followerId, Long followingId) {
+        Optional<Follow> follow = followRepository.findByFollowerIdAndFollowingId(followerId, followingId);
+        follow.ifPresent(followRepository::delete);
+    }
 }
