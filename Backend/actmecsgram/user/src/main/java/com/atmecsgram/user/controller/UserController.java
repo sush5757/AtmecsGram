@@ -19,8 +19,6 @@ import com.atmecsgram.user.model.User;
 import com.atmecsgram.user.service.UserService;
 
 
-
-
 @RestController
 @RequestMapping("/user")
 public class UserController {

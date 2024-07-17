@@ -20,8 +20,8 @@ public class UserService {
 	public User createUser(UserDto userDto) {
 		User user = new User();
 
-		user.setFirst_name(userDto.getFirstName());
-		user.setLast_name(userDto.getLastName());
+		user.setFirst_name(userDto.getFirst_name());
+		user.setLast_name(userDto.getLast_name());
 		user.setEmail(userDto.getEmail());
 		user.setUsername(userDto.getUsername());
 		user.setPassword(userDto.getPassword());
@@ -68,8 +68,8 @@ public class UserService {
 
 		if (getUser.isPresent()) {
 			User user = getUser.get();
-			user.setFirst_name(userDto.getFirstName());
-			user.setLast_name(userDto.getLastName());
+			user.setFirst_name(userDto.getFirst_name());
+			user.setLast_name(userDto.getLast_name());
 			user.setEmail(userDto.getEmail());
 			user.setUsername(userDto.getUsername());
 			user.setPassword(userDto.getPassword());
