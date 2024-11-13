@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.actmecsgram.dto.FollowDto;
 import com.actmecsgram.dto.PostDto;
 import com.actmecsgram.dto.UserDto;
 import com.actmecsgram.models.Post;
@@ -36,11 +37,11 @@ public class PostService {
 	
 	public List<Post> getPostsForFollowing(Long userId) {
 		logger.info("Fetching following IDs for user ID: {}", userId);
-		ResponseEntity<List<Long>> responseEntity = restTemplate.exchange(
+		ResponseEntity<List<FollowDto>> responseEntity = restTemplate.exchange(
 			FOLLOW_SERVICE_URL + userId + "/following",
-			HttpMethod.GET, null, new ParameterizedTypeReference<List<Long>>() {}
+			HttpMethod.GET, null, new ParameterizedTypeReference<List<FollowDto>>() {}
 		);
-		List<Long> followingIds = responseEntity.getBody();
+		List<FollowDto> followingIds = responseEntity.getBody();
 		logger.info("Following IDs: {}", followingIds);
 
 		if (followingIds == null || followingIds.isEmpty()) {

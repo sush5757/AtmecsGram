@@ -25,9 +25,9 @@ public class FollowService {
 		followRepository.save(follow);
 	}
 
-	public List<Long> getFollowingIds(Long userId) {
+	public List<Follow> getFollowingIds(Long userId) {
 		List<Follow> followings = followRepository.findByFollowerId(userId);
-		return followings.stream().map(Follow::getFollowingId).toList();
+		return  followings;
 	}
 
 	public List<Follow> getFollowers(Long userId) {

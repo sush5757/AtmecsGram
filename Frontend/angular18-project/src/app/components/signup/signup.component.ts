@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+  import { Router } from '@angular/router';
 import { User } from '../../types';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
