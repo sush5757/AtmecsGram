@@ -1,0 +1,40 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/**
+        - id: FOLLOW-SERVICE
+          uri: lb://FOLLOW-SERVICE
+          predicates:
+            - Path=/follow/**
+        - id: ATMECSGRAM
+          uri: lb://ATMECSGRAM
+          predicates:
+            - Path=/posts/**
+server:
+  port: 8083
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
