@@ -36,9 +36,11 @@ export class CreatePostComponent {
         },
       };
 
-      this.postsService.addPost(newPost);
-      this.description = '';
-      this.imageUrl = '';
+      this.postsService.createPost(newPost).subscribe((post) => {
+        this.description = '';
+        this.imageUrl = '';
+        console.log('Post created successfully', post);
+      });
     } else {
       alert('Description or image URL are mandatory');
     }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Post } from '../../types';
 import { UserTileComponent } from '../user-tile/user-tile.component';
 import { CustomButtonComponent } from '../custom-button/custom-button.component';
+import { PostsService } from '../../services/posts.service';
 
 @Component({
   selector: 'app-post',

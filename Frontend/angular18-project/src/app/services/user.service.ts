@@ -17,7 +17,12 @@ export class UserService {
   }
 
   setUserFromLocalStorage() {
-    this.user.next(JSON.parse(localStorage.getItem('user') || ''));
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      this.user.next(JSON.parse(userData));
+    } else {
+      this.user.next(null);
+    }
   }
 
   increaseFollowing(followedUser: User) {

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { HttpClient } from '@angular/common/http';
 
-import { User } from '../../types';
+import { User,Post } from '../../types';
 
 import { PostComponent } from '../post/post.component';
 import { SuggestionsComponent } from '../suggestions/suggestions.component';
@@ -26,18 +26,20 @@ import { CreatePostComponent } from '../create-post/create-post.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  posts: Post[] = [];
   showCreatePost: boolean = false;
-
   user!: User;
   constructor(
     private http: HttpClient,
     public userService: UserService,
-    public postService: PostsService
+    public postsService: PostsService
   ) {}
 
   ngOnInit() {
     this.userService.user$.subscribe((user) => (this.user = user));
+    this.postsService.posts$.subscribe((posts) => (this.posts = posts));
+    this.postsService.loadPosts();
   }
   onUnfollow(user: User) {
     this.userService.decreaseFollowing(user);

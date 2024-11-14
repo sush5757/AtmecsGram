@@ -1,39 +1,45 @@
 <div
   class="flex shadow-sm gap-2 flex-col p-5 border-neutral-200 bg-white w-full rounded-lg border"
 >
+  <!-- User Tile Component -->
   <app-user-tile class="px-2" [user]="post.user"></app-user-tile>
-  @if(post.description !== undefined && post.description.length > 0){
-  <p class="text-sm px-4 text-neutral-700">
+
+  <!-- Conditional rendering for description -->
+  <p
+    class="text-sm px-4 text-neutral-700"
+    *ngIf="post.description && post.description.length > 0"
+  >
     {{ post.description }}
   </p>
-  } @if(post.image !== undefined && post.image.length > 0){
+
+  <!-- Conditional rendering for image -->
   <img
+    *ngIf="post.image && post.image.length > 0"
     class="aspect-auto object-cover rounded-lg"
     [src]="post.image"
     alt=""
     srcset=""
   />
-  }
+
   <div class="flex flex-row items-center justify-between gap-6 w-full">
     <div class="flex flex-row items-center gap-4">
       <div class="flex flex-row gap-1 items-center">
         <p class="text-neutral-600 text-sm">Likes</p>
-
         <h1 class="text-neutral-600 text-sm">{{ post.likesCount }}</h1>
       </div>
 
       <div class="flex flex-row gap-1 items-center">
         <p class="text-neutral-600 text-sm">Comments</p>
-
         <h1 class="text-neutral-600 text-sm">{{ post.commentsCount }}</h1>
       </div>
 
       <div class="flex flex-row gap-1 items-center">
         <p class="text-neutral-600 text-sm">Shares</p>
-
         <h1 class="text-neutral-600 text-sm">{{ post.sharesCount }}</h1>
       </div>
     </div>
+
+    <!-- Custom Button (optional) -->
     <!-- <app-custom-button
       [isOutline]="false"
       radius="rounded-full"
@@ -41,4 +47,12 @@
       textSize="text-xs"
     ></app-custom-button> -->
   </div>
+
+  <!-- Success and Error Messages -->
+  <!-- <div *ngIf="successMessage" class="text-green-600 text-sm">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="text-red-600 text-sm">
+    {{ errorMessage }}
+  </div> -->
 </div>

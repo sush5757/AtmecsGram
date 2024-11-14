@@ -9,6 +9,7 @@ import com.actmecsgram.models.LikeClass;
 
 @Repository
 public interface LikesRepository extends JpaRepository<LikeClass, Long> {
-//    List<LikeClass> findByPost_PostId(Integer postId);
-//    List<LikeClass> findByUserId(Long userId);
+
+	
 }
+

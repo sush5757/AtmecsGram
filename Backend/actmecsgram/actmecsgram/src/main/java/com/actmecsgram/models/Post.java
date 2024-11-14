@@ -2,7 +2,6 @@ package com.actmecsgram.models;
 
 import java.util.Date;
 import java.util.Set;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,48 +12,41 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-
 @Entity
 public class Post {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer post_id;
-	
-	
-	private Long userId; 
-	
-	private String caption;
-	private String image_url;
-	private String video_url;
-	
-	 @Temporal(TemporalType.TIMESTAMP)
-	    private Date created_at;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer postId;
 
-	    @Temporal(TemporalType.TIMESTAMP)
-	    private Date updated_at;
-	
+    private Long userId;
+    private String caption;
+    private String imageUrl;
+    private String videoUrl;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Comment> comments;
-    
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<LikeClass> likes;
 
+    // Constructors, getters, setters, toString, and utility methods
+
+    public int getLikesCount() {
+        return this.likes != null ? this.likes.size() : 0;
+    }
+
 	public Integer getPostId() {
-		return post_id;
+		return postId;
 	}
 
 	public void setPostId(Integer postId) {
-		this.post_id = postId;
-	}
-
-	
-
-	public Integer getPost_id() {
-		return post_id;
-	}
-
-	public void setPost_id(Integer post_id) {
-		this.post_id = post_id;
+		this.postId = postId;
 	}
 
 	public Long getUserId() {
@@ -73,36 +65,36 @@ public class Post {
 		this.caption = caption;
 	}
 
-	public String getImage_url() {
-		return image_url;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setImage_url(String image_url) {
-		this.image_url = image_url;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
-	public String getVideo_url() {
-		return video_url;
+	public String getVideoUrl() {
+		return videoUrl;
 	}
 
-	public void setVideo_url(String video_url) {
-		this.video_url = video_url;
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
 	}
 
-	public Date getCreated_at() {
-		return created_at;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
-	public Date getUpdated_at() {
-		return updated_at;
+	public Date getUpdatedAt() {
+		return updatedAt;
 	}
 
-	public void setUpdated_at(Date updated_at) {
-		this.updated_at = updated_at;
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public Set<Comment> getComments() {
@@ -121,33 +113,32 @@ public class Post {
 		this.likes = likes;
 	}
 
-	public Post() {
-		
-	}
-	public Post(Integer postId, Long user, String caption, String image_url, String video_url, Date created_at,
-			Date updated_at, Set<Comment> comments, Set<LikeClass> likes) {
+	public Post(Integer postId, Long userId, String caption, String imageUrl, String videoUrl, Date createdAt,
+			Date updatedAt, Set<Comment> comments, Set<LikeClass> likes) {
 		super();
-		this.post_id = postId;
-		this.userId = user;
+		this.postId = postId;
+		this.userId = userId;
 		this.caption = caption;
-		this.image_url = image_url;
-		this.video_url = video_url;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
+		this.imageUrl = imageUrl;
+		this.videoUrl = videoUrl;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 		this.comments = comments;
 		this.likes = likes;
 	}
 
+	public Post() {
+	
+	}
+
 	@Override
 	public String toString() {
-		return "Post [postId=" + post_id + ", user=" + userId + ", caption=" + caption + ", image_url=" + image_url
-				+ ", video_url=" + video_url + ", created_at=" + created_at + ", updated_at=" + updated_at
-				+ ", comments=" + comments + ", likes=" + likes + "]";
+		return "Post [postId=" + postId + ", userId=" + userId + ", caption=" + caption + ", imageUrl=" + imageUrl
+				+ ", videoUrl=" + videoUrl + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", comments="
+				+ comments + ", likes=" + likes + "]";
 	}
-	public int getLikesCount() {
-		System.out.println("Printing likes "+ likes);
-        return this.likes != null ? this.likes.size() : 0;
-    }
     
     
+
+    // Add other getters, setters, and constructors here as needed.
 }

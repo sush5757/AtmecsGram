@@ -1,8 +1,9 @@
 package com.actmecsgram.models;
 
 import java.util.Date;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,84 +15,84 @@ import jakarta.persistence.TemporalType;
 
 @Entity
 public class Comment {
-	
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
-	@ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
-    private Post post; // This should match the mappedBy in Post entity
+    private Post post;
 
-
-    @JoinColumn(name = "user_id", nullable = false)
-    private Long userId; // Use Long instead of User
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     private String text;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created_at;
+    private Date createdAt;
 
     // Constructors
-    public Comment() {
-    }
+    public Comment() {}
 
-    public Comment(Long commentId, Post post, Long userId, String text, Date created_at) {
+    public Comment(Long commentId, Post post, Long userId, String text, Date createdAt) {
         this.commentId = commentId;
         this.post = post;
         this.userId = userId;
         this.text = text;
-        this.created_at = created_at;
-    }
-
-    // Getters and Setters
-    public Long getCommentId() {
-        return commentId;
-    }
-
-    public void setCommentId(Long commentId) {
-        this.commentId = commentId;
-    }
-
-    public Post getPostId() {
-        return post;
-    }
-
-    public void setPostId(Long postId) {
-        this.post = post;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
-
-    @Override
-    public String toString() {
-        return "Comment [commentId=" + commentId + ", postId=" + post + ", userId=" + userId + ", text=" + text + ", created_at=" + created_at + "]";
+        this.createdAt = createdAt;
     }
 
     @PrePersist
     protected void onCreate() {
-        this.created_at = new Date();
+        this.createdAt = new Date();
     }
+
+	public Long getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(Long commentId) {
+		this.commentId = commentId;
+	}
+
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	@Override
+	public String toString() {
+		return "Comment [commentId=" + commentId + ", post=" + post + ", userId=" + userId + ", text=" + text
+				+ ", createdAt=" + createdAt + "]";
+	}
+
+    
+    
 }
