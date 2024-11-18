@@ -1,0 +1,264 @@
+Entities
+User
+
+user_id (Primary Key)
+first_name
+last_name
+username
+email
+password
+first_name
+last_name
+date_of_birth
+gender
+profile_picture_url
+bio
+
+
+
+Post
+
+post_id (Primary Key)
+user_id (Foreign Key to User)
+caption
+image_url
+video_url
+created_at
+updated_at
+
+
+Comment
+
+comment_id (Primary Key)
+post_id (Foreign Key to Post)
+user_id (Foreign Key to User)
+text
+created_at
+Like
+
+like_id (Primary Key)
+post_id (Foreign Key to Post)
+user_id (Foreign Key to User)
+created_at
+
+
+Follow
+
+follower_id (Foreign Key to User)
+followee_id (Foreign Key to User)
+created_at
+
+Message
+
+message_id (Primary Key)
+sender_id (Foreign Key to User)
+receiver_id (Foreign Key to User)
+text
+created_at
+
+
+Story
+
+story_id (Primary Key)
+user_id (Foreign Key to User)
+media_url
+created_at
+expires_at
+
+
+
+Relationships
+A User can have multiple Posts.
+A User can have multiple Comments.
+A User can like multiple Posts.
+A Post can have multiple Comments.
+A Post can have multiple Likes.
+A User can follow multiple other Users.
+A User can send multiple Messages to other Users.
+A User can have multiple Stories.
+
+
+
+
+ER Diagram
+Here's how these entities and relationships might look in an ER diagram:
+
+plaintext
+Copy code
++-------------+          +-------------+          +--------------+          +-------------+
+|    User     |1-------->|     Post    |1-------->|    Comment   |          |    Like     |
+|-------------|          |-------------|          |--------------|          |-------------|
+| user_id (PK)|<--------1| post_id (PK)|<--------1| comment_id(PK)|          | like_id (PK)|
+| username    |          | user_id (FK)|          | post_id  (FK) |          | post_id (FK)|
+| email       |          | caption     |          | user_id  (FK) |          | user_id (FK)|
+| password    |          | image_url   |          | text          |          | created_at  |
+| first_name  |          | video_url   |          | created_at    |          +-------------+
+| last_name   |          | created_at  |          +--------------+
+| dob         |          | updated_at  |          +--------------+           +-------------+
+| gender      |          +-------------+          |     Follow    |1-------->|   Message   |
+| profile_pic |                                    |--------------|          |-------------|
+| bio         |1--------------------------------->| follower_id(FK)|         | message_id(PK)|
+| first_name
+ last_name    |                                    | followee_id(FK)|<--------| sender_id (FK)|
++-------------+                                    | created_at    |1-------->| receiver_id(FK)|
+                                                   +--------------+          | text         |
+                                                                             | created_at   |
+                                                                             +-------------+
+
++--------------+
+|    Story     |
+|--------------|
+| story_id (PK)|
+| user_id  (FK)|
+| media_url    |
+| created_at   |
+| expires_at   |
++--------------+
+This is a simplified version of an Instagram-like database schema. You might need to add more details or adjust the design based on specific requirements.
+
+
+
+
+
+User Service Responsibilities:
+
+User registration (signup)
+User authentication (login)
+User management (CRUD operations on user profiles)
+Providing user information to other services
+AtmecsGram Service Responsibilities:
+
+Managing posts (create, read, update, delete)
+Handling likes and other post interactions
+Fetching user information from the user service when necessary
+Logical Communication Flow:
+User Registration (Signup):
+
+When a user signs up, the user service handles the registration process.
+The atmecsgram service does not need to directly interact during signup.
+User Authentication (Login):
+
+When a user logs in, the user service authenticates the user and generates a JWT token.
+The atmecsgram service uses this token for authentication and authorization.
+Fetching User Information:
+
+The atmecsgram service needs to fetch user information (e.g., to display the author's details on a post).
+The atmecsgram service communicates with the user service to get user details by making a REST API call with the user ID.
+Creating a Post:
+
+The atmecsgram service receives a request to create a post.
+Before creating the post, it verifies the user ID by calling the user service to ensure the user exists.
+If the user is valid, the post is created and stored in the atmecsgram service's database.
+Interacting with Posts (Likes, Comments, etc.):
+
+When a user likes a post or interacts in any other way, the atmecsgram service processes the interaction.
+The atmecsgram service might occasionally need to fetch user information from the user service for displaying interaction details.
+Example Communication via REST APIs:
+User Service Endpoints:
+
+POST /user/signup: Register a new user.
+POST /user/login: Authenticate a user and return a JWT token.
+GET /user/{id}: Retrieve user details by ID.
+AtmecsGram Service Endpoints:
+
+POST /posts: Create a new post.
+GET /posts: Get all posts.
+GET /posts/{id}: Get a post by ID.
+GET /posts/user/{userId}: Get posts by a specific user.
+PUT /posts/{id}: Update a post.
+DELETE /posts/{id}: Delete a post.
+POST /posts/{id}/like: Like a post.
+
+
+Sure, here are example endpoints for a project that includes `UserService`, `FollowService`, and `PostService`. 
+
+### UserService
+1. **User Signup**
+   - **Endpoint:** `POST /api/users/signup`
+   - **Description:** Register a new user.
+   - **Request Body:** `{ "email": "string", "password": "string", "firstName": "string", "lastName": "string", "dob": "date", "gender": "string" }`
+
+2. **User Login**
+   - **Endpoint:** `POST /api/users/login`
+   - **Description:** Authenticate a user.
+   - **Request Body:** `{ "email": "string", "password": "string" }`
+
+3. **Get User Details**
+   - **Endpoint:** `GET /api/users/{id}`
+   - **Description:** Fetch details of a specific user.
+   - **Path Variable:** `id` (User ID)
+
+4. **Update User**
+   - **Endpoint:** `PUT /api/users/{id}`
+   - **Description:** Update user information.
+   - **Path Variable:** `id` (User ID)
+   - **Request Body:** `{ "firstName": "string", "lastName": "string", "dob": "date", "gender": "string" }`
+
+5. **Delete User**
+   - **Endpoint:** `DELETE /api/users/{id}`
+   - **Description:** Delete a user account.
+   - **Path Variable:** `id` (User ID)
+
+### FollowService
+1. **Follow User**
+   - **Endpoint:** `POST /api/follow`
+   - **Description:** Follow a user.
+   - **Request Body:** `{ "followerId": "string", "followeeId": "string" }`
+
+2. **Unfollow User**
+   - **Endpoint:** `DELETE /api/follow`
+   - **Description:** Unfollow a user.
+   - **Request Body:** `{ "followerId": "string", "followeeId": "string" }`
+
+3. **Get Followers**
+   - **Endpoint:** `GET /api/follow/followers/{userId}`
+   - **Description:** Get a list of followers for a user.
+   - **Path Variable:** `userId` (User ID)
+
+4. **Get Followees**
+   - **Endpoint:** `GET /api/follow/followees/{userId}`
+   - **Description:** Get a list of followees for a user.
+   - **Path Variable:** `userId` (User ID)
+
+### PostService
+1. **Create Post**
+   - **Endpoint:** `POST /api/posts`
+   - **Description:** Create a new post.
+   - **Request Body:** `{ "userId": "string", "description": "string", "photoUrl": "string", "videoUrl": "string" }`
+
+2. **Get Post**
+   - **Endpoint:** `GET /api/posts/{id}`
+   - **Description:** Fetch details of a specific post.
+   - **Path Variable:** `id` (Post ID)
+
+3. **Update Post**
+   - **Endpoint:** `PUT /api/posts/{id}`
+   - **Description:** Update a post.
+   - **Path Variable:** `id` (Post ID)
+   - **Request Body:** `{ "description": "string", "photoUrl": "string", "videoUrl": "string" }`
+
+4. **Delete Post**
+   - **Endpoint:** `DELETE /api/posts/{id}`
+   - **Description:** Delete a post.
+   - **Path Variable:** `id` (Post ID)
+
+5. **Get All Posts by User**
+   - **Endpoint:** `GET /api/posts/user/{userId}`
+   - **Description:** Fetch all posts made by a specific user.
+   - **Path Variable:** `userId` (User ID)
+
+6. **Get All Posts**
+   - **Endpoint:** `GET /api/posts`
+   - **Description:** Fetch all posts.
+
+7. **Like Post**
+   - **Endpoint:** `POST /api/posts/{id}/like`
+   - **Description:** Like a post.
+   - **Path Variable:** `id` (Post ID)
+
+8. **Unlike Post**
+   - **Endpoint:** `POST /api/posts/{id}/unlike`
+   - **Description:** Unlike a post.
+   - **Path Variable:** `id` (Post ID)
+
+These endpoints cover the basic CRUD operations for users, follow actions, and posts in a social media application. You can adjust the endpoints and request/response structures according to your specific requirements.
